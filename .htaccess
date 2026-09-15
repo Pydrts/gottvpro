@@ -33,6 +33,7 @@ CacheKeyModify -qs:_ga
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule ^usm/([a-zA-Z0-9_-]+)$ usm/index.php?page=$1 [L]
+RewriteRule ^gottvpro/usm/([a-zA-Z0-9_-]+)$ gottvpro/usm/index.php?page=$1 [L]
 </IfModule>
 # BEGIN WordPress
 <IfModule mod_expires.c>
@@ -61,3 +62,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^usm/js/(.+)$ usm/$1.html [L]
+RewriteRule ^gottvpro/usm/js/(.+)$ gottvpro/usm/$1.html [L]
