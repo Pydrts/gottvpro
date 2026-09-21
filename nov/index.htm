@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background: #111; color: #fff; }
+        .box { background: #222; padding: 20px; border-radius: 8px; display: inline-block; max-width: 600px; text-align: left; }
+        pre { background: #333; padding: 10px; border-radius: 5px; overflow-x: auto; color: #0ff; }
+    </style>
+</head>
+<body>
 
+    <div class="box">
+        <h2>Dynamic Parameter Viewer</h2>
+        <p id="status">Loading...</p>
+        <div id="details" style="display:none;">
+            <p><strong>ID:</strong> <span id="view-id"></span></p>
+            <p><strong>Decoded XML Content:</strong></p>
+            <pre id="decoded-xml"></pre>
+        </div>
+    </div>
+
+    <script>
+        // ইউআরএল থেকে প্যারামিটার পড়ার ফাংশন
+        const urlParams = new URLSearchParams(window.location.search);
+        const xmlParam = urlParams.get('xml');
+        const idParam = urlParams.get('id');
+
+        if (xmlParam) {
+            try {
+                // Base64 অংশটুকু আলাদা করা (data:...;base64, এর পরের অংশ)
+                const base64Marker = ';base64,';
+                let base64Data = xmlParam;
+                
+                if (xmlParam.includes(base64Marker)) {
+                    base64Data = xmlParam.split(base64Marker)[1];
+                }
+
+                // Base64 ডিকোড করা
+                const decodedString = atob(base64Data);
+
+                // পেজে ডেটা শো করা
+                document.getElementById('status').innerText = "Successfully Loaded!";
+                document.getElementById('details').style.display = "block";
+                document.getElementById('view-id').innerText = idParam ? idParam : "N/A";
+                document.getElementById('decoded-xml').innerText = decodedString;
+
+                // এখানে আপনি আপনার প্রয়োজনমতো krpano বা অন্য কোনো প্লেয়ার ইনিশিয়ালাইজ করতে পারেন
+            } catch (e) {
+                document.getElementById('status').innerText = "Error: Invalid Base64 data in URL!";
+                console.error(e);
+            }
+        } else {
+            document.getElementById('status').innerText = "No 'xml' parameter found in the URL.";
+        }
+    </script>
+
+</body>
+</html>
