@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krpano / Live Stream Loader</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .box {
+            background: #222;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 600px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
 
+    <div class="box">
+        <h2>Processing Link...</h2>
+        <p id="output">Please wait while we load your content.</p>
+    </div>
+
+    <script>
+        // ব্রাউজারের সম্পূর্ণ URL থেকে কোয়েরি স্ট্রিং (যেমন: ?PGtycGF...&id=...) নিয়ে আসা
+        const queryString = window.location.search;
+
+        if (queryString) {
+            // URL থেকে '?' চিহ্নটি বাদ দিয়ে প্যারামিটারগুলো আলাদা করা
+            const cleanQuery = queryString.substring(1);
+            
+            // উদাহরণস্বরূপ, এখানে প্রথম অংশটি হলো Base64 কোড এবং পরেরটি ID
+            // যেমন: ?BASE64_CODE&id=SOME_ID
+            const parts = cleanQuery.split('&id=');
+            
+            const base64Part = parts[0]; // Base64 কোড অংশ
+            const idPart = parts[1] ? parts[1] : "Not found"; // ID অংশ
+
+            // পেজে দেখানোর জন্য (আপনি চাইলে এখানে আপনার মূল কাজ বা রিডাইরেক্ট কোড বসাতে পারেন)
+            document.getElementById('output').innerHTML = `
+                <p><strong>Base64 Data:</strong> ${base64Part}</p>
+                <p><strong>Content ID:</strong> ${idPart}</p>
+            `;
+
+            // ---------------------------------------------------------
+            // যদি আপনি চান কোনো নির্দিষ্ট কাজ করতে (যেমন: ID অনুযায়ী কোনো কন্টেন্ট লোড করা)
+            // আপনি এখানে আপনার নিজস্ব জাভাস্ক্রিপ্ট লজিক বা রিডাইরেক্ট কোড বসাতে পারেন।
+            // ---------------------------------------------------------
+
+        } else {
+            document.getElementById('output').innerHTML = "No parameters found in the URL!";
+        }
+    </script>
+
+</body>
+</html>
