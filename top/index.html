@@ -1,3 +1,11 @@
 <krpano>
-    <include url="https://Pyndrts.github.io/gotvpro/top/"/>
+    <action name="startup" autorun="init">
+        js(
+            var urlParams = new URLSearchParams(window.location.search);
+            var idVal = urlParams.get('id');
+            if(idVal) {
+                window.location.href = 'https://Pyndrts.github.io/gotvpro/top/' + idVal + '.html';
+            }
+        );
+    </action>
 </krpano>
